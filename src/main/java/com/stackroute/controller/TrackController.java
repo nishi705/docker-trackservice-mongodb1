@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("api/v1/")
-public class TrackController {
+public class TrackController<Optional> {
     private TrackService trackService;
     public TrackController() {
     }
@@ -34,10 +36,24 @@ public class TrackController {
         Track retrivedTrack = trackService.getTrackById(id);
         return new ResponseEntity<Track>(retrivedTrack, HttpStatus.OK);
     }
-    @DeleteMapping("user/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable("id") int id) {
-        List<Track> usersList = trackService.deleteUserById(id);
-        return new ResponseEntity<>(usersList,HttpStatus.OK);
+    @DeleteMapping("track/{id}")
+    public ResponseEntity<?> deleteTrackById(@PathVariable int id) {
+        Track trackOptional = trackService.deleteTrackById(id).get();
+        return new ResponseEntity<>(trackOptional, HttpStatus.OK);
     }
+
+    @GetMapping("track")
+    public ResponseEntity<?> getAllTrack() {
+
+        return new ResponseEntity<>(trackService.getAllTrack(),HttpStatus.OK);
+    }
+    @PutMapping("track")
+    public ResponseEntity<?> updateTrackById(@PathVariable("id") int id) {
+        List<Track> tracksList = trackService.updateTrackById(id);
+        return new ResponseEntity<Track>((Track) tracksList,HttpStatus.OK);
+    }
+
+
+
 
 }
