@@ -34,8 +34,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public Track getTrackById(int id) throws TrackNotFoundException {
-        if (!trackRepository.existsById(id))
-        {
+        if (!trackRepository.existsById(id)) {
             throw new TrackNotFoundException("track not exist");
         }
         Track retrievedTrack = trackRepository.findById(id).get();
@@ -48,29 +47,34 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public List<Track> searchTrackByName(String name) {
-        List<Track> foundTracksList = trackRepository.searchTrackByName(name);
+    public List<Track> searchTrackByName(String name) throws TrackNotFoundException {
+        List<Track> foundTracksList = trackRepository.searchTrackByName((name);
+        {
+            throw new TrackNotFoundException("get by name not found");
+        }
         return foundTracksList;
     }
 
 
     @Override
-    public Optional<Track> deleteTrackById(int id) throws TrackNotFoundException{
-        Optional<Track> optional = trackRepository.findById(id);
-        if (optional.isPresent()) {
+    public Optional<Track> deleteTrackById(int id) throws TrackNotFoundException {
+        if (trackRepository.existsById(id)) {
+            Optional<Track> optional = trackRepository.findById(id);
             trackRepository.deleteById(id);
+            return optional;
         }
-        return optional;
-
-
+        throw new TrackNotFoundException("deleted track");
     }
 
+
     @Override
-    public List<Track> updateTrackById(String name) {
-//        Gets the reference to the Track object (lazy)
-        List<Track> tracks = trackRepository.searchTrackByName(name);
-        return tracks;
-
-
+    public Track updateTrackById(int id, Track track) throws TrackNotFoundException {
+        if (trackRepository.existsById(id)) {
+            Track trackBeforeUpdate = trackRepository.findById(id).get();
+            track.setComments(track.getComments());
+            track.setName(track.getName());
+            return trackRepository.save(track);
+        }
+        throw new TrackNotFoundException("update failed");
     }
 }
