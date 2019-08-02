@@ -34,6 +34,13 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
+    public List<Track> searchTrackByName(String name) {
+        List<Track> foundTracksList = trackRepository.searchTrackByName(name);
+        return foundTracksList;
+    }
+
+
+    @Override
     public Optional<Track> deleteTrackById(int id) {
         Optional<Track> optional = trackRepository.findById(id);
         if (optional.isPresent()) {
@@ -45,8 +52,11 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public List<Track> updateTrackById(int id) {
-        List<Track> optional=trackRepository.findAll();
-        
+    public List<Track> updateTrackById(String name) {
+//        Gets the reference to the Track object (lazy)
+        List<Track> tracks = trackRepository.searchTrackByName(name);
+        return tracks;
+
+
     }
 }
