@@ -1,6 +1,8 @@
 package com.stackroute.service;
 
 import com.stackroute.domain.Track;
+import com.stackroute.exceptions.TrackAlreadyExistsException;
+import com.stackroute.exceptions.TrackNotFoundException;
 import com.stackroute.repository.TrackRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,26 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track saveTrack(Track track) {
+    public Track saveTrack(Track track) throws TrackAlreadyExistsException {
+
+        if (trackRepository.existsById(track.getId())) {
+            throw new TrackAlreadyExistsException("track already exist");
+        }
+
         Track savedTrack = trackRepository.save(track);
+        {
+            if (savedTrack == null)
+                throw new TrackAlreadyExistsException("track already exist");
+        }
         return savedTrack;
     }
 
     @Override
-    public Track getTrackById(int id) {
-
+    public Track getTrackById(int id) throws TrackNotFoundException {
+        if (!trackRepository.existsById(id))
+        {
+            throw new TrackNotFoundException("track not exist");
+        }
         Track retrievedTrack = trackRepository.findById(id).get();
         return retrievedTrack;
     }
@@ -41,7 +55,7 @@ public class TrackServiceImpl implements TrackService {
 
 
     @Override
-    public Optional<Track> deleteTrackById(int id) {
+    public Optional<Track> deleteTrackById(int id) throws TrackNotFoundException{
         Optional<Track> optional = trackRepository.findById(id);
         if (optional.isPresent()) {
             trackRepository.deleteById(id);
@@ -59,7 +73,4 @@ public class TrackServiceImpl implements TrackService {
 
 
     }
-
-    @Override
-
 }
