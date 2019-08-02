@@ -48,8 +48,8 @@ public class TrackController<Optional> {
         return new ResponseEntity<>(trackService.getAllTrack(),HttpStatus.OK);
     }
     @PutMapping("track")
-    public ResponseEntity<?> updateTrackById(@PathVariable int id) {
-        Track updatedTrack = (Track) trackService.updateTrackById(id);
+    public ResponseEntity<?> updateTrackById(@PathVariable String name) {
+        Track updatedTrack = (Track) trackService.updateTrackById(name);
         return new ResponseEntity<>(updatedTrack,HttpStatus.OK);
     }
     @GetMapping("track/search/name/{trackName}")
