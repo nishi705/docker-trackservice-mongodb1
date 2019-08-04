@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
-public class TrackController<Optional> {
+public class TrackController {
     private TrackService trackService;
 
     public TrackController() {
@@ -59,9 +59,8 @@ public class TrackController<Optional> {
 
     @DeleteMapping("track/{id}")
     public ResponseEntity<?> deleteTrackById(@PathVariable int id) {
-
         try {
-            Optional<> optionalTrack = trackService.deleteTrackById(id);
+            Optional<Track> optionalTrack = trackService.deleteTrackById(id);
             return new ResponseEntity<>(optionalTrack, HttpStatus.OK);
         } catch (TrackNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
@@ -90,9 +89,9 @@ public class TrackController<Optional> {
     }
 
     @GetMapping("tracks/name/{trackName}")
-    public ResponseEntity<?> searchTrackByName(@PathVariable String name) {
+    public ResponseEntity<?> searchTrackByName(@PathVariable String trackName) {
         try {
-            List<Track> foundTracksList = trackService.searchTrackByName(name);
+            List<Track> foundTracksList = trackService.searchTrackByName(trackName);
             return new ResponseEntity<>(foundTracksList, HttpStatus.OK);
         } catch (TrackNotFoundException tr) {
             return new ResponseEntity<>(tr.getMessage(), HttpStatus.OK);
