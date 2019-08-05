@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
+//annotation provided by Spring allows you to write global
+//  code that can be applied to a wide range of controllers
+
 public class GlobalException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(TrackNotFoundException.class)
     public ResponseEntity<Object> trackNotfound(final TrackNotFoundException ex) {

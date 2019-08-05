@@ -4,6 +4,7 @@ import com.stackroute.domain.Track;
 import com.stackroute.exceptions.TrackAlreadyExistsException;
 import com.stackroute.exceptions.TrackNotFoundException;
 import com.stackroute.repository.TrackRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Profile("MainService")
+@Profile("main")
 public class TrackServiceImpl implements TrackService {
     private TrackRepository trackRepository;
-
+@Autowired
     public TrackServiceImpl(TrackRepository trackRepository) {
         this.trackRepository = trackRepository;
     }
@@ -26,12 +27,7 @@ public class TrackServiceImpl implements TrackService {
             throw new TrackAlreadyExistsException("track already exist");
         }
 
-        Track savedTrack = trackRepository.save(track);
-        {
-            if (savedTrack == null)
-                throw new TrackAlreadyExistsException("track already exist");
-        }
-        return savedTrack;
+       return trackRepository.save(track);
     }
 
     @Override
@@ -50,7 +46,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public List<Track> searchTrackByName(String name) throws TrackNotFoundException {
-        List<Track> foundTracksList = trackRepository.searchTrackByName(name);
+        List<Track> foundTracksList = trackRepository.findByName(name);
         if (foundTracksList.isEmpty()){
             throw new TrackNotFoundException("get by name not found");
         }
@@ -59,7 +55,7 @@ public class TrackServiceImpl implements TrackService {
 
 
     @Override
-    public Optional<Object> deleteTrackById(int id) throws TrackNotFoundException {
+    public Optional<Track> deleteTrackById(int id) throws TrackNotFoundException {
         if (trackRepository.existsById(id)) {
             Optional<Track> optional = trackRepository.findById(id);
             trackRepository.deleteById(id);
@@ -75,6 +71,7 @@ public class TrackServiceImpl implements TrackService {
             Track trackBeforeUpdate = trackRepository.findById(id).get();
             track.setComments(track.getComments());
             track.setName(track.getName());
+
             return trackRepository.save(track);
         }
         throw new TrackNotFoundException("update failed");

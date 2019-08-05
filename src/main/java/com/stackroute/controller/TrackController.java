@@ -15,6 +15,7 @@ import java.util.Optional;
 
 
 @RestController
+
 @RequestMapping("api/v1/")
 public class TrackController {
     private TrackService trackService;
@@ -29,7 +30,7 @@ public class TrackController {
 
     @PostMapping("track")
     //here we will handle the exception
-    public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackAlreadyExistsException {
+    public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackAlreadyExistsException, TrackNotFoundException{
 
 
             Track savedTrack = trackService.saveTrack(track);

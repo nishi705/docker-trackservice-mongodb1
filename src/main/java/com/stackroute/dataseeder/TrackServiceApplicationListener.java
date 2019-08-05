@@ -2,6 +2,7 @@ package com.stackroute.dataseeder;
 
 import com.stackroute.domain.Track;
 import com.stackroute.exceptions.TrackAlreadyExistsException;
+import com.stackroute.exceptions.TrackNotFoundException;
 import com.stackroute.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,8 +19,6 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:application.properties")
 //used to specify the path of the resource file.
 class TrackServiceApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
-
-    @Qualifier("trackService")
     //Used to particularly mention the bean name.
     private TrackService trackService;
 
@@ -28,27 +27,25 @@ class TrackServiceApplicationListener implements ApplicationListener<ContextRefr
         this.trackService = trackService;
     }
 
-    @Value("${track1.id}")
-    private int trackId;
-    @Value("${track1.name}")
-    private String trackName;
-    @Value("${track1.comments}")
-    private String trackComments;
+
 
     @Autowired
     private Environment environment;
+    @Value ("${id}")
+    int id;
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        Track track1 = new Track(trackId, trackName, trackComments);
-        Track track2 = new Track(Integer.parseInt(environment.getProperty("track2.id")),
-                environment.getProperty("track2.name"), environment.getProperty("track2.comments"));
-        try
-        {
-            trackService.saveTrack(track1);
-            trackService.saveTrack(track2);
-        }catch (TrackAlreadyExistsException ex){
-            ex.printStackTrace();
+    public void onApplicationEvent(ContextRefreshedEvent event){
+       // Track track1 = new Track(trackId, trackName, trackComments);
+        //Track track2 = new Track(Integer.parseInt(environment.getProperty("track2.id")),
+              //  environment.getProperty("track2.name"), environment.getProperty("track2.comments"));
+        try {
+            trackService.saveTrack(new Track(id, environment.getProperty("trackName"), environment.getProperty("comments")));
+        } catch (TrackAlreadyExistsException trackAlreadyExistExceptions) {
+            trackAlreadyExistExceptions.printStackTrace();
         }
-    }
+
+
+        }
+
 }

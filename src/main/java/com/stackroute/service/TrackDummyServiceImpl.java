@@ -5,20 +5,18 @@ package com.stackroute.service;
 // annotation along with @Autowired to remove the confusion by specifying which exact bean will be wired.
 
 
+import com.stackroute.domain.Track;
+import com.stackroute.exceptions.TrackAlreadyExistsException;
+import com.stackroute.exceptions.TrackNotFoundException;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
-        import com.stackroute.domain.Track;
-        import com.stackroute.exceptions.TrackAlreadyExistsException;
-        import com.stackroute.exceptions.TrackNotFoundException;
-        import org.springframework.context.annotation.Primary;
-        import org.springframework.context.annotation.Profile;
-        import org.springframework.stereotype.Service;
-
-        import java.util.List;
-        import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 @Profile("dummy")
 @Service
- class TrackDummyServiceImpl implements TrackService {
+class TrackDummyServiceImpl implements TrackService {
     @Override
     public Track saveTrack(Track track) throws TrackAlreadyExistsException {
         return null;
@@ -35,7 +33,7 @@ package com.stackroute.service;
     }
 
     @Override
-    public Optional<Object> deleteTrackById(int id) throws TrackNotFoundException {
+    public Optional<Track> deleteTrackById(int id) throws TrackNotFoundException {
         return Optional.empty();
     }
 
@@ -51,3 +49,11 @@ package com.stackroute.service;
 
 
 }
+
+
+
+
+
+
+
+
