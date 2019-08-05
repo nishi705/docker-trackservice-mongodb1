@@ -13,18 +13,18 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-@Data
+
 //To create getters and setters for all properties, to override toString(),
 // to create equals, canEquals and HashCode.
 @ConfigurationProperties(prefix = "track4")
 //Used to get the data prefix with track4 and matches with the property name.
- class CommandLineRunnerSeedData implements CommandLineRunner {
+ class TrackServiceSeedDataCommandLineRunner implements CommandLineRunner {
     @Qualifier("trackService")
     //Used to particularly mention the bean name.
     private TrackRepository trackRepository;
 
     @Autowired
-    public CommandLineRunnerSeedData(TrackRepository trackRepository) {
+    public TrackServiceSeedDataCommandLineRunner(TrackRepository trackRepository) {
         this.trackRepository = trackRepository;
     }
 

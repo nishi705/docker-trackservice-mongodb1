@@ -17,14 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:application.properties")
 //used to specify the path of the resource file.
-class ApplicationListerSeedata implements ApplicationListener<ContextRefreshedEvent> {
+class TrackServiceApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Qualifier("trackService")
     //Used to particularly mention the bean name.
     private TrackService trackService;
 
     @Autowired
-    public ApplicationListerSeedata(TrackService trackService) {
+    public TrackServiceApplicationListener(TrackService trackService) {
         this.trackService = trackService;
     }
 

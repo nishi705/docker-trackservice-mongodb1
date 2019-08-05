@@ -18,7 +18,7 @@ package com.stackroute.service;
 
 @Profile("dummy")
 @Service
- class TrackServiceDummyImpl implements TrackService {
+ class TrackDummyServiceImpl implements TrackService {
     @Override
     public Track saveTrack(Track track) throws TrackAlreadyExistsException {
         return null;
