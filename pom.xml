@@ -104,11 +104,18 @@
 
 
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+
+
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>2.0.2</version>
 		</dependency>
+
+
+
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -199,6 +206,14 @@
 			<artifactId>activation</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
+
 
 	</dependencies>
 
