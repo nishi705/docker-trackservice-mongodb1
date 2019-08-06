@@ -62,6 +62,7 @@ public class TrackServiceTest {
 
     @Test(expected = TrackAlreadyExistsException.class)
     public void saveTrackTestFailure() throws  TrackAlreadyExistsException {
+        //here if i will return false then i will not get exception
         when(trackRepository.existsById(track.getId())).thenReturn(true);
         when(trackRepository.save((Track)any())).thenReturn(track);
         Track saveTrack = trackService.saveTrack(track);
@@ -73,7 +74,7 @@ public class TrackServiceTest {
 
 
     }
-
+//
     @Test
     public void getAllUser(){
 
