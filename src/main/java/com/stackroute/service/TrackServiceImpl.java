@@ -15,7 +15,8 @@ import java.util.Optional;
 @Profile("main")
 public class TrackServiceImpl implements TrackService {
     private TrackRepository trackRepository;
-@Autowired
+
+    @Autowired
     public TrackServiceImpl(TrackRepository trackRepository) {
         this.trackRepository = trackRepository;
     }
@@ -27,7 +28,7 @@ public class TrackServiceImpl implements TrackService {
             throw new TrackAlreadyExistsException("track already exist");
         }
 
-       return trackRepository.save(track);
+        return trackRepository.save(track);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public List<Track> searchTrackByName(String name) throws TrackNotFoundException {
         List<Track> foundTracksList = trackRepository.findByName(name);
-        if (foundTracksList.isEmpty()){
+        if (foundTracksList.isEmpty()) {
             throw new TrackNotFoundException("get by name not found");
         }
         return foundTracksList;
